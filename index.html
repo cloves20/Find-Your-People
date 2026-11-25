@@ -200,6 +200,7 @@ footer{padding:48px 6vw 38px;border-top:1px solid var(--line)}
 @media(max-width:600px){.eyebrow,.crumb,.tag,.note,.filters label,.filter,.meta dt,.tags span,.card .kick,.card .go,.wcard .d,.wcard a,.rights a,.more,.facts span,.pstats span,.fbase,nav{font-size:12.5px;letter-spacing:0}.pcount,.count,.cal span,.credits{font-size:13px}.card p,.pdesc,.wcard p,.value p,.rights p,.meta{font-size:15px}.products,.grid,.row4,.next,.cal{grid-template-columns:minmax(0,1fr)}.fgrid{grid-template-columns:minmax(0,1fr)}.mo,.ev{grid-template-columns:100px minmax(0,1fr);gap:12px}.ev .nm{font-size:14px}.ev .nm small{display:none}.count{margin-left:0;width:100%}.quick{opacity:1;transform:none}.band2 a.box{grid-template-columns:minmax(0,1fr) 110px}.announcement{font-size:13.5px;letter-spacing:0}}
 @media(prefers-reduced-motion:reduce){.marquee span{animation:none}.product .plate svg,.product .plate img,.quick,.btn,.card{transition:none}}
 </style>
+<script data-goatcounter="https://findyourpeople.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
 
@@ -612,7 +613,7 @@ function route(){
   paint(document);
   if(h==="work-jobs")$("work-jobs").scrollIntoView();else window.scrollTo(0,0);
 }
-addEventListener("hashchange",route);
+addEventListener("hashchange",()=>{route();try{window.goatcounter&&window.goatcounter.count&&window.goatcounter.count({path:location.pathname+location.hash,title:document.title+" "+location.hash.slice(1)})}catch(e){}});
 route();
 }
 </script>
