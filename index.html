@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Find Your People Vienna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..700,100;1,9..144,500..700,100&display=swap" rel="stylesheet">
+<style>
+/* VOICE warm, considered, editorial; styled after the person's own reference (a calm lifestyle shop)
+   IDEA a carefully curated catalogue of the city's social life: categories presented like collections
+   PICTURE drawn plates in muted earth tones: a Vienna skyline with a Ferris wheel, and one still-life per category
+   COLOUR Vienna: coffeehouse cream #f7f1e3, tram red #c4161c, park-bench green #1f4d3a, Schönbrunn yellow #f2c230
+   TYPE Fraunces (soft serif, tram-red italic accents) + Figtree; sentence-case labels
+   LAYOUT announcement bar, sticky header, two-column hero, marquee, collection grid, story split, values row, closing band, footer */
+:root{--ink:#1d1d1b;--paper:#f7f1e3;--muted:#6b665c;--line:#e3d9c4;--green:#1f4d3a;--clay:#c4161c;--sand:#efe3c8;--sage:#f3d27a;--card:#fffaf0;--yellow:#f2c230}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:90px}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.7 "Figtree",system-ui,sans-serif;overflow-x:clip}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+p{margin:0}
+[hidden]{display:none!important}
+h1,h2,h3{font-family:"Fraunces",Georgia,serif;font-weight:600;font-variation-settings:"SOFT" 100,"WONK" 0;margin:0;letter-spacing:-.04em;line-height:1}
+h1{font-size:clamp(48px,7vw,96px);letter-spacing:-.035em}
+h2{font-size:clamp(36px,5vw,58px)}
+h3{font-size:24px;letter-spacing:-.02em;line-height:1.15}
+h1 em,h2 em{color:var(--clay);font-style:italic;font-weight:500}
+.eyebrow{font-size:15px;color:var(--green);font-weight:700}
+.sub{font-size:14px;color:var(--muted);line-height:1.8;max-width:340px}
+.btn{display:inline-flex;align-items:center;gap:18px;background:var(--clay);color:#fff;padding:14px 24px;font-size:15px;font-weight:600;letter-spacing:0;border:1.5px solid var(--clay);border-radius:999px;transition:.25s;min-height:48px}
+.btn:hover{background:transparent;color:var(--clay)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:#fff}
+a:focus-visible,button:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+.section{padding:clamp(64px,8vw,100px) 6vw}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:24px 48px;margin-bottom:36px;flex-wrap:wrap}
+.section-head h2{margin-top:12px}
+.plate{position:relative;overflow:hidden;background:var(--sand)}
+.plate svg,.plate img{position:absolute;inset:0;width:100%;height:100%;display:block}
+.plate img{object-fit:cover}
+.note{position:absolute;bottom:16px;left:16px;background:var(--paper);padding:9px 16px;border-radius:999px;font-weight:600;font-size:13.5px;letter-spacing:0}
+.tag{position:absolute;top:14px;left:14px;background:var(--paper);padding:6px 12px;border-radius:999px;font-weight:600;font-size:13.5px;letter-spacing:0}
+/* announcement + header */
+.announcement{background:var(--green);color:#f7f1e3;text-align:center;padding:10px 16px;font-size:13.5px;letter-spacing:0}
+header{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 6vw;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(247,241,227,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:10}
+.logo{font-size:19px;font-weight:700;letter-spacing:0;white-space:nowrap}
+.logo span{font-family:"Fraunces";font-weight:500;font-style:italic;letter-spacing:0;text-transform:none;color:var(--green)}
+nav{display:flex;gap:28px;font-size:13.5px;letter-spacing:0;color:#3d3a33}
+nav a{padding:8px 0;border-bottom:1px solid transparent}
+nav a:hover,nav a[aria-current=page]{color:var(--ink);border-bottom-color:var(--ink)}
+.menu-btn{display:none;background:none;border:1px solid var(--ink);border-radius:50px;padding:10px 16px;font-size:13.5px;letter-spacing:0;min-height:44px}
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);padding:34px 6vw 56px;gap:5vw;align-items:center}
+.hero-copy{padding:40px 0 40px 4vw}
+.hero h1{margin:24px 0}
+.hero-copy p{max-width:390px;color:var(--muted);font-size:15px;line-height:1.9;margin:0 0 34px}
+.hero .plate{height:clamp(380px,42vw,560px)}
+.facts{display:flex;gap:36px;flex-wrap:wrap;margin-top:40px;padding-top:22px;border-top:1px solid var(--line)}
+.facts b{display:block;font:500 34px/1 "Fraunces",Georgia,serif;letter-spacing:-.03em;margin-bottom:6px}
+.facts span{font-size:13.5px;letter-spacing:0;color:var(--muted)}
+.marquee{overflow:hidden;border-block:1px solid var(--line);padding:18px 0;white-space:nowrap;color:var(--green);font:italic 500 22px "Fraunces",Georgia,serif}
+.marquee span{display:inline-block;padding-left:4vw;animation:scroll 32s linear infinite}
+@keyframes scroll{to{transform:translateX(-100%)}}
+/* collection tiles */
+.products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.product .plate{height:clamp(240px,24vw,330px)}
+.product .plate svg,.product .plate img{transition:transform .6s}
+.product:hover .plate svg,.product:hover .plate img{transform:scale(1.05)}
+.credits{font-size:13.5px;color:var(--muted);margin-top:18px;line-height:1.7}
+.quick{position:absolute;bottom:12px;left:12px;right:12px;background:rgba(247,241,227,.96);padding:13px;font-size:13.5px;letter-spacing:0;text-align:center;opacity:0;transform:translateY(8px);transition:.25s}
+.product:hover .quick,.product:focus-visible .quick{opacity:1;transform:none}
+.pinfo{display:flex;justify-content:space-between;gap:12px;padding:16px 1px 4px;align-items:baseline}
+.pname{font:500 21px "Fraunces",Georgia,serif;letter-spacing:-.02em}
+.pcount{font-size:12px;color:var(--muted);white-space:nowrap}
+.pdesc{font-size:13px;color:var(--muted)}
+/* winter row */
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
+.wcard{border-top:1px solid var(--ink);padding-top:16px;display:flex;flex-direction:column;gap:8px}
+.wcard .d{font-size:14px;color:var(--clay);font-weight:700}
+.wcard h3{font-size:22px}
+.wcard p{font-size:13px;color:var(--muted);line-height:1.75}
+.wcard a{font-size:13.5px;letter-spacing:0;margin-top:auto;padding-top:6px}
+/* story split */
+.story{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:var(--sand)}
+.story .plate{min-height:520px;background:#e9dcc0}
+.story-copy{padding:8vw 7vw;display:flex;flex-direction:column;justify-content:center;gap:20px}
+.story-copy p{font-size:14px;color:#5f5a50;line-height:1.9;max-width:420px}
+.dl{max-width:440px;border-top:1px solid #dccfb2}
+.dl div{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid #dccfb2;font-size:13px}
+.dl span{color:var(--muted);text-align:right}
+/* about note */
+.about{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:5vw;padding:clamp(64px,8vw,100px) 6vw;border-top:1px solid var(--line);align-items:start}
+.about blockquote{margin:0;font:italic 500 clamp(24px,2.6vw,32px)/1.35 "Fraunces",Georgia,serif;letter-spacing:-.02em}
+.about p{font-size:15px;color:var(--muted);line-height:1.9;margin-top:20px;max-width:560px}
+.about .sig{font-size:13.5px;letter-spacing:0;color:var(--ink);margin-top:22px}
+@media(max-width:850px){.about{grid-template-columns:minmax(0,1fr)}}
+/* values */
+.values{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:35px;padding:75px 6vw;border-bottom:1px solid var(--line)}
+.value{border-top:1px solid var(--line);padding-top:18px}
+.value b{display:block;font:500 25px/1.2 "Fraunces",Georgia,serif;margin-bottom:8px}
+.value p{font-size:13px;line-height:1.8;color:var(--muted);max-width:300px}
+/* closing band */
+.band2{padding:clamp(70px,8vw,100px) 6vw;background:var(--sage);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px}
+.band2 a.box{background:var(--paper);display:grid;grid-template-columns:minmax(0,1fr) 150px;min-height:220px;transition:.25s}
+.band2 a.box:hover{transform:translateY(-3px)}
+.band2 .box>div:first-child{padding:28px;display:flex;flex-direction:column;gap:10px}
+.band2 .box p{font-size:13px;color:var(--muted)}
+.band2 .box .plate{height:100%}
+.band2 .head{grid-column:1/-1;text-align:center;margin-bottom:18px}
+.band2 .head p{font-size:14px;color:#3d3a33;margin-top:14px}
+.more{font-size:13.5px;letter-spacing:0;border-bottom:1px solid var(--ink);padding-bottom:3px;white-space:nowrap}
+/* page heads */
+.phead{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:5vw;padding:40px 6vw 56px;align-items:center}
+.phead .plate{height:clamp(280px,32vw,430px);border-radius:18px}
+
+.crumb{font-size:13.5px;letter-spacing:0;color:var(--muted);margin-bottom:26px}
+.crumb a:hover{color:var(--ink)}
+.phead h1{font-size:clamp(46px,6vw,84px);margin:18px 0 22px}
+.phead p.sub{max-width:440px;font-size:15px}
+.pstats{display:flex;gap:36px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line)}
+.pstats b{display:block;font:500 30px/1 "Fraunces",Georgia,serif;margin-bottom:6px}
+.pstats span{font-size:13.5px;letter-spacing:0;color:var(--muted)}
+.tools{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;padding:18px 0;border-block:1px solid var(--line);margin-bottom:32px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.filters label{font-size:13.5px;letter-spacing:0;color:var(--muted);margin-right:4px}
+.filter{border:1px solid var(--line);background:transparent;padding:0 16px;min-height:40px;border-radius:30px;font-size:13.5px;letter-spacing:0;color:var(--muted)}
+.filter[aria-pressed=true],.filter:hover{background:var(--ink);border-color:var(--ink);color:#fff}
+.count{margin-left:auto;font-size:12px;color:var(--muted)}
+/* place cards */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;display:flex;flex-direction:column;gap:12px;transition:.25s}
+.card:hover{border-color:var(--ink)}
+.card .kick{font-size:13.5px;letter-spacing:0;color:var(--green);font-weight:700}
+.card h3{font-size:23px}
+.card p{font-size:13.5px;color:var(--muted);line-height:1.75}
+.meta{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 16px;font-size:13px;margin:4px 0 0;padding:14px 0;border-block:1px solid var(--line)}
+.meta dt{font-size:13.5px;letter-spacing:0;color:var(--muted);padding-top:2px}
+.meta dd{margin:0}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags span{border-radius:999px;font-size:13.5px;letter-spacing:0;padding:5px 9px;border:1px solid var(--line);white-space:nowrap;color:var(--muted)}
+.tags .stu{background:var(--yellow);border-color:var(--yellow);color:var(--ink)}
+.card .go{margin-top:auto;padding-top:8px;font-size:13.5px;letter-spacing:0;display:flex;justify-content:space-between}
+.card .go:hover{color:var(--green)}
+.empty{padding:48px 20px;text-align:center;color:var(--muted);border:1px solid var(--line);grid-column:1/-1}
+.next{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--line)}
+.next a{padding:22px 16px 22px 0;font:500 21px "Fraunces",Georgia,serif;letter-spacing:-.02em;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:8px}
+.next a:hover{color:var(--green)}
+.h2s{font-size:clamp(30px,3.6vw,42px);margin:0 0 26px}
+/* winter timeline */
+.tl{background:var(--card);border:1px solid var(--line);padding:26px clamp(16px,2.4vw,32px);margin-bottom:56px}
+.mo,.ev{display:grid;grid-template-columns:230px minmax(0,1fr);gap:20px;align-items:center}
+.mo{font-size:13.5px;letter-spacing:0;color:var(--muted);margin-bottom:8px}
+.mo div,.trk{position:relative}
+.mo div{height:18px}
+.mo span{position:absolute}
+.ev{padding:10px 0;border-top:1px solid var(--line)}
+.ev .nm{font:500 17px/1.2 "Fraunces",Georgia,serif}
+.ev .nm small{display:block;font:400 12px "Figtree",sans-serif;color:var(--muted);margin-top:3px}
+.trk{height:20px}
+.trk i{position:absolute;top:6px;height:8px;border-radius:4px;background:var(--green);min-width:8px}
+.trk i.ball{background:var(--clay)}
+.trk i.one{background:var(--ink)}
+.now{position:absolute;top:-10px;bottom:-10px;width:1px;background:var(--clay)}
+.nowl{position:absolute;color:var(--clay);font-weight:700;transform:translateX(6px);white-space:nowrap;top:-2px}
+.legend{display:flex;gap:20px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:16px}
+.legend i{display:inline-block;width:18px;height:8px;border-radius:4px;margin-right:8px;vertical-align:1px}
+.fine{font-size:12px;color:var(--muted);margin-top:24px}
+/* rights */
+.rights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.rights div{border-top:1px solid var(--ink);padding-top:18px;display:flex;flex-direction:column;gap:8px}
+.rights b{font:600 38px/1 "Fraunces",Georgia,serif;color:var(--clay)}
+.rights p{font-size:13.5px;color:var(--muted);line-height:1.8}
+.rights a{font-size:13.5px;letter-spacing:0;margin-top:auto;padding-top:6px}
+/* calendars + footer */
+.cal{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--line)}
+.cal a{display:flex;flex-direction:column;gap:2px;padding:20px 16px 20px 0;font:500 19px "Fraunces",Georgia,serif;border-bottom:1px solid var(--line)}
+.cal a:hover{color:var(--green)}
+.cal span{font:400 12px "Figtree",sans-serif;color:var(--muted)}
+footer{padding:48px 6vw 38px;border-top:1px solid var(--line)}
+.fgrid{display:grid;grid-template-columns:minmax(0,1.6fr) repeat(2,minmax(0,1fr));gap:36px}
+.fgrid h4{font-size:13.5px;letter-spacing:0;margin:0 0 12px;font-weight:700}
+.fgrid a{display:block;font-size:13px;color:var(--muted);padding:3px 0}
+.fgrid a:hover{color:var(--ink)}
+.fgrid p{font-size:13px;color:var(--muted);max-width:340px;margin-top:12px}
+.fbase{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-size:13.5px;letter-spacing:0;color:var(--muted)}
+@media(max-width:960px){.products,.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.row4{grid-template-columns:repeat(2,minmax(0,1fr))}.next,.cal{grid-template-columns:repeat(3,minmax(0,1fr))}nav{gap:16px}}
+@media(max-width:850px){.hero,.phead,.story,.band2{grid-template-columns:minmax(0,1fr)}.hero-copy{padding:20px 0 0}.story .plate{min-height:360px}.rights,.values{grid-template-columns:minmax(0,1fr)}.mo,.ev{grid-template-columns:150px minmax(0,1fr)}}
+@media(max-width:760px){.menu-btn{display:block}nav{display:none;position:absolute;top:78px;left:0;right:0;background:var(--paper);padding:20px 6vw;flex-direction:column;gap:6px;border-bottom:1px solid var(--line)}nav.open{display:flex}}
+@media(max-width:600px){.eyebrow,.crumb,.tag,.note,.filters label,.filter,.meta dt,.tags span,.card .kick,.card .go,.wcard .d,.wcard a,.rights a,.more,.facts span,.pstats span,.fbase,nav{font-size:12.5px;letter-spacing:0}.pcount,.count,.cal span,.credits{font-size:13px}.card p,.pdesc,.wcard p,.value p,.rights p,.meta{font-size:15px}.products,.grid,.row4,.next,.cal{grid-template-columns:minmax(0,1fr)}.fgrid{grid-template-columns:minmax(0,1fr)}.mo,.ev{grid-template-columns:100px minmax(0,1fr);gap:12px}.ev .nm{font-size:14px}.ev .nm small{display:none}.count{margin-left:0;width:100%}.quick{opacity:1;transform:none}.band2 a.box{grid-template-columns:minmax(0,1fr) 110px}.announcement{font-size:13.5px;letter-spacing:0}}
+@media(prefers-reduced-motion:reduce){.marquee span{animation:none}.product .plate svg,.product .plate img,.quick,.btn,.card{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="announcement">A free guide to Vienna's social life · Updated for winter 2026/27</div>
+<header>
+  <a class="logo" href="#home">Find Your People<span>.</span></a>
+  <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
+  <nav id="nav" aria-label="Main">
+    <a href="#explore">Categories</a>
+    <a href="#winter">Winter</a>
+    <a href="#students">Students</a>
+    <a href="#work">Volunteer &amp; jobs</a>
+    <a href="#tips">Going alone</a>
+  </nav>
+</header>
+
+<!-- HOME -->
+<main id="v-home">
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow">Your guide to Vienna's social life</div>
+      <h1>Find your <em>people</em> here.</h1>
+      <p>A hand-picked list of the places and groups where people in Vienna actually meet. Pick what you enjoy, find a place, and go.</p>
+      <a class="btn" href="#explore">Find your place <span>→</span></a>
+      <div class="facts" id="hstats"></div>
+    </div>
+    <div class="plate" data-art="hero"><span class="note">01 / Vienna, together</span></div>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><span>Come alone, leave with friends · Talk · Play · Move · Make · Give · Learn · Come alone, leave with friends · Talk · Play · Move · Make · Give · Learn · </span></div>
+
+  <section class="section">
+    <div class="section-head">
+      <div><div class="eyebrow">Start here</div><h2>Six ways to <em>meet people.</em></h2></div>
+      <p class="sub">Pick what sounds like you. Each category has its own page with every place, time and price.</p>
+    </div>
+    <div class="products" id="tiles"></div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="section-head">
+      <div><div class="eyebrow">Winter 2026/27</div><h2>Coming up <em>this winter.</em></h2></div>
+      <a class="more" href="#winter">The full winter timetable ↗</a>
+    </div>
+    <div class="row4" id="wteaser"></div>
+  </section>
+
+  <section class="story">
+    <div class="plate" data-art="study"></div>
+    <div class="story-copy">
+      <div class="eyebrow">For students</div>
+      <h2>Studying in<br><em>Vienna?</em></h2>
+      <p>Universities run a whole social life many students never discover: buddy programmes, cheap sports courses, international dinners and student-priced balls.</p>
+      <div class="dl" id="stuart"></div>
+      <div><a class="btn" href="#students">Open the student guide <span>↗</span></a></div>
+    </div>
+  </section>
+
+  <section class="about">
+    <div><div class="eyebrow">Why this exists</div><h2 style="margin-top:12px">A note from <em>me.</em></h2></div>
+    <div>
+      <blockquote>"I made this because I needed it."</blockquote>
+      <p>I live in Vienna but study in Krems. That means almost two hours on the train every morning and another two every evening to get back. On weekends I work. Between all that, meeting new people in my own city felt like something that happened to everyone else.</p>
+      <p>So I started collecting the places where people here actually meet: the language nights, run clubs, game evenings and volunteer groups. This guide is that list, tidied up so you don't have to start from zero like I did. If you go somewhere because of it, I'd love to hear how it went.</p>
+      <p class="sig">— The person behind Find Your People</p>
+    </div>
+  </section>
+
+  <section class="values">
+    <div class="value"><b>01 / Pick an activity</b><p>Games, runs and choirs give everyone something to do, so you never have to invent small talk from nothing.</p></div>
+    <div class="value"><b>02 / Go twice</b><p>The first visit is always the awkward one. On the second, people recognise you.</p></div>
+    <div class="value"><b>03 / Suggest the next one</b><p>"Are you coming next week?" beats a vague "let's hang out". <a href="#tips" style="color:var(--ink);border-bottom:1px solid">More tips</a></p></div>
+  </section>
+
+  <section class="band2">
+    <div class="head"><div class="eyebrow">Give time, or earn some</div><h2>Volunteer or find<br>a <em>side job.</em></h2><p>Working side by side is one of the easiest ways to meet people.</p></div>
+    <a class="box" href="#work"><div><div class="eyebrow">Volunteering</div><h3>Help out, meet people</h3><p id="wvcount"></p><span class="more" style="margin-top:auto;align-self:start">See volunteering ↗</span></div><div class="plate" data-art="give"></div></a>
+    <a class="box" href="#work-jobs"><div><div class="eyebrow">Part-time jobs</div><h3>Side jobs &amp; your rights</h3><p>Where to look for work in Vienna, plus free advice if something feels wrong.</p><span class="more" style="margin-top:auto;align-self:start">See part-time jobs ↗</span></div><div class="plate" data-art="jobs"></div></a>
+  </section>
+</main>
+
+<!-- CATEGORIES -->
+<main id="v-explore" hidden>
+  <section class="section">
+    <p class="crumb"><a href="#home">Home</a> / Categories</p>
+    <div class="section-head"><div><div class="eyebrow">Find your thing</div><h2>All <em>categories.</em></h2></div><p class="sub">Pick a category to see every place in it, with times, locations and prices.</p></div>
+    <div class="products" id="tiles2"></div>
+  </section>
+</main>
+
+<!-- CATEGORY PAGE -->
+<main id="v-line" hidden>
+  <section class="phead" id="phead"></section>
+  <section class="section" style="padding-top:0">
+    <div class="tools">
+      <div class="filters" role="group" aria-label="Cost">
+        <label>Cost</label>
+        <button class="filter" data-f="cost" data-v="all">Any</button>
+        <button class="filter" data-f="cost" data-v="free">Free</button>
+        <button class="filter" data-f="cost" data-v="low">Under €10</button>
+      </div>
+      <div class="filters" role="group" aria-label="Social energy">
+        <label>Energy</label>
+        <button class="filter" data-f="shy" data-v="all">Any</button>
+        <button class="filter" data-f="shy" data-v="1">Shy-friendly</button>
+        <button class="filter" data-f="shy" data-v="3">Chatty</button>
+      </div>
+      <span class="count" id="count" aria-live="polite"></span>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div style="margin-top:72px"><div class="eyebrow" style="margin-bottom:12px">Other categories</div><div class="next" id="next"></div></div>
+  </section>
+</main>
+
+<!-- WINTER -->
+<main id="v-winter" hidden>
+  <section class="phead">
+    <div>
+      <p class="crumb"><a href="#home">Home</a> / Winter</p>
+      <div class="eyebrow">The season guide</div>
+      <h1>Winter <em>2026/27.</em></h1>
+      <p class="sub">Christmas markets, ice rinks, New Year's Eve and ball season. A Punsch stand is the easiest place in the world to start a conversation.</p>
+    </div>
+    <div class="plate" data-art="winter"><span class="note">Nov – Mar</span></div>
+  </section>
+  <section class="section" style="padding-top:0">
+    <div class="tl" id="tl"></div>
+    <div class="row4" id="wall"></div>
+    <p class="fine">Dates are for the 2026/27 season as announced by the organisers. Always check the official link before you go.</p>
+  </section>
+</main>
+
+<!-- STUDENTS -->
+<main id="v-students" hidden>
+  <section class="phead">
+    <div>
+      <p class="crumb"><a href="#home">Home</a> / Students</p>
+      <div class="eyebrow">For students</div>
+      <h1>The student <em>guide.</em></h1>
+      <p class="sub">University networks, sports and student-priced nights out. Most are open to students from any university in Vienna, and local students can join as buddies.</p>
+    </div>
+    <div class="plate" data-art="study"></div>
+  </section>
+  <section class="section" style="padding-top:0">
+    <h2 class="h2s">Networks &amp; <em>sport</em></h2>
+    <div class="grid" id="sgrid"></div>
+    <h2 class="h2s" style="margin-top:80px">Student nights out <em>this winter</em></h2>
+    <div class="row4" id="sballs"></div>
+    <h2 class="h2s" style="margin-top:80px">Also popular <em>with students</em></h2>
+    <div class="grid" id="sother"></div>
+  </section>
+</main>
+
+<!-- WORK -->
+<main id="v-work" hidden>
+  <section class="phead">
+    <div>
+      <p class="crumb"><a href="#home">Home</a> / Volunteer &amp; jobs</p>
+      <div class="eyebrow">Give time, or earn some</div>
+      <h1>Volunteer &amp; <em>side jobs.</em></h1>
+      <p class="sub">Either way you meet people you'd never cross paths with otherwise.</p>
+    </div>
+    <div class="plate" data-art="give"></div>
+  </section>
+  <section class="section" style="padding-top:0">
+    <h2 class="h2s">Volunteering</h2>
+    <p class="sub" style="margin:-12px 0 26px;max-width:560px">Start with a city or charity platform. They match you with organisations near you, from one-off tasks to regular roles.</p>
+    <div class="grid" id="vgrid"></div>
+  </section>
+  <section class="section" id="work-jobs" style="background:var(--sand)">
+    <h2 class="h2s">Part-time &amp; <em>student jobs</em></h2>
+    <p class="sub" style="margin:-12px 0 26px;max-width:560px">Where to look for side jobs in Vienna. Many are in hospitality, retail, events and promotion, with flexible or weekend hours.</p>
+    <div class="grid" id="jgrid"></div>
+    <h2 class="h2s" style="margin-top:80px">Know your <em>rights</em></h2>
+    <div class="rights">
+      <div><b>€551.10</b><h3>Marginal job limit, 2026</h3><p>Earn up to this per month and you're "geringfügig" employed: no social insurance or tax deducted, but you're still covered by accident insurance. Above it, you're fully insured.</p><a href="https://www.ams.at/arbeitsuchende/topicliste/geringfuegigkeitsgrenze" target="_blank" rel="noopener">AMS explainer ↗</a></div>
+      <div><b>Free</b><h3>Advice from AK Wien</h3><p>The Chamber of Labour gives free, confidential advice to working students and can check whether you were paid correctly. Prinz-Eugen-Straße 20–22, 1040 · +43 1 50165-0.</p><a href="https://wien.arbeiterkammer.at/beratung/bildung/studium/Arbeiten_und_Studieren.html" target="_blank" rel="noopener">AK Wien: working &amp; studying ↗</a></div>
+      <div><b>Check</b><h3>Before you sign</h3><p>Earnings can affect grants and scholarships, so check before taking on more hours. The ÖH student union also offers social advice for working students.</p><a href="https://www.studium.at/ratgeber/arbeiten/arbeitsrecht" target="_blank" rel="noopener">Student work-rights guide ↗</a></div>
+    </div>
+    <p class="fine">General information, not legal advice. Rules change, so confirm your own case with AK Wien or the ÖH.</p>
+  </section>
+</main>
+
+<!-- TIPS -->
+<main id="v-tips" hidden>
+  <section class="phead">
+    <div>
+      <p class="crumb"><a href="#home">Home</a> / Going alone</p>
+      <div class="eyebrow">A gentle start</div>
+      <h1>Going <em>alone.</em></h1>
+      <p class="sub">Everyone at these events was new once. Six things that make the first time easier.</p>
+    </div>
+    <div class="plate" data-art="tips"></div>
+  </section>
+  <section class="values" style="padding-top:0">
+    <div class="value"><b>01 / Pick an activity, not a party</b><p>Games, runs, choirs and volunteering give everyone something to do, so you never have to invent small talk from nothing.</p></div>
+    <div class="value"><b>02 / Go twice before judging</b><p>The first visit is always the awkward one. On the second, people recognise you, and that's when it starts to feel like yours.</p></div>
+    <div class="value"><b>03 / Tell the host you're new</b><p>Most organisers love newcomers and will introduce you to someone. One sentence at the door does a lot of work.</p></div>
+    <div class="value"><b>04 / Arrive early, not late</b><p>Joining a group of five is easy. Joining a group of forty already deep in conversation is hard.</p></div>
+    <div class="value"><b>05 / Have one easy question</b><p>"How long have you been coming here?" works everywhere and gets people telling you the good stuff.</p></div>
+    <div class="value"><b>06 / Suggest the next one</b><p>Friendships grow from repeated, easy contact. "Are you coming next week?" beats a vague "let's hang out".</p></div>
+  </section>
+  <section class="section" style="padding-top:56px"><a class="btn" href="#explore">Find a shy-friendly place <span>↗</span></a></section>
+</main>
+
+<section class="section" style="padding-top:0">
+  <div class="eyebrow" style="margin-bottom:12px">Where this week's events get posted</div>
+  <div class="cal">
+    <a href="https://www.wien.gv.at/veranstaltungen" target="_blank" rel="noopener">Wien erleben<span>City events calendar</span></a>
+    <a href="https://www.meetup.com/find/at--vienna/" target="_blank" rel="noopener">Meetup Vienna<span>Groups and meetups</span></a>
+    <a href="https://activities.esn.org/organisation/esn-austria/activities" target="_blank" rel="noopener">ESN activities<span>Student events</span></a>
+    <a href="https://viennawurstelstand.com" target="_blank" rel="noopener">Vienna Würstelstand<span>English city magazine</span></a>
+    <a href="https://www.wien.info/en" target="_blank" rel="noopener">wien.info<span>Seasonal highlights</span></a>
+  </div>
+</section>
+
+<footer>
+  <div class="fgrid">
+    <div><a class="logo" href="#home">Find Your People<span>.</span></a><p>A free guide to meeting people in Vienna. Made by a student who needed it too.</p></div>
+    <div><h4>Categories</h4><div id="flines"></div></div>
+    <div><h4>Guide</h4><a href="#winter">Winter timetable</a><a href="#students">Student guide</a><a href="#work">Volunteer &amp; jobs</a><a href="#tips">Going alone</a></div>
+  </div>
+  <p class="credits">Photos from Pexels by Frank Wesneck, Gizem Erol, Karola G, Ron Lach, Picmatti, cottonbro studio, Catarina, Rahela Ulici, Riccardo Lucon, SilverKBlack and WR Heustis.</p>
+  <div class="fbase"><span>Find Your People · Vienna</span><span>Last checked November 2026 · Always check the link before you go</span></div>
+</footer>
+
+<script>
+{
+const LINES={
+  talk:{n:"Talk & languages",short:"Talk",d:"Language exchanges and conversation nights",long:"Language exchanges and social evenings built around conversation. The fastest way to meet many people at once."},
+  play:{n:"Games & quizzes",short:"Games",d:"Board games, pub quizzes, phone-free nights",long:"Game nights, pub quizzes and phone-free evenings. The game does the talking, ideal if small talk isn't your thing."},
+  move:{n:"Active & outdoors",short:"Active",d:"Run clubs and outdoor groups",long:"Social run clubs and outdoor groups. Most are free, every pace is welcome, and the coffee afterwards is where friendships begin."},
+  make:{n:"Hobbies & classes",short:"Hobbies",d:"Choirs, courses and clubs",long:"Choirs, courses and clubs: the same faces every week, which is exactly how acquaintances become friends."},
+  give:{n:"Volunteering",short:"Volunteering",d:"Help out with people who care",long:"Volunteer beside people who care about the same things you do."},
+  study:{n:"Students",short:"Students",d:"Student networks and university sport",long:"Student networks, buddy programmes and university sport."}
+};
+const SHY={1:"Shy-friendly",2:"Some chatting",3:"Chatty"};
+const COST={free:"Free",low:"Under €10",paid:"Ticketed"};
+const D=[
+ {line:"talk",name:"Saturday language exchange at Pickwick's",what:"Expats, exchange students and locals practise languages over drinks in an international pub. A host welcomes newcomers.",when:"Saturday evenings",where:"Pickwick's, Marc-Aurel-Straße 10–12, 1010",cost:"free",costT:"Free entry, buy a drink",lang:"Many languages",shy:3,stu:1,url:"https://www.meetup.com/topics/language-exchange/at/"},
+ {line:"talk",name:"Café con Salsa",what:"Relaxed language exchange with an optional salsa workshop. No dancing or Spanish needed; you can stay at the talking table.",when:"Evenings from 18:00, see group",where:"See Meetup group",cost:"low",costT:"Free with a café order; €10 with workshop",lang:"German, English, Spanish +",shy:2,stu:1,url:"https://www.meetup.com/salsa-und-bachata-in-wien/"},
+ {line:"talk",name:"talkin' Social Adventures",what:"Volunteer-run 'comfort zone' events: improv, photowalks, discussion nights. Anyone can host one.",when:"Several per month",where:"Varies (Café Benno, Prater, Augarten…)",cost:"free",costT:"Free",lang:"English or German",shy:2,url:"https://talkin.org"},
+ {line:"talk",name:"Coffee House Social",what:"Small coffee-house meetups for making friends, aimed at 25–45-year-olds who prefer small groups to parties.",when:"See group",where:"Café near Lenaugasse, 1080",cost:"paid",costT:"Ticket via Groupvibe",lang:"English",shy:2,url:"https://www.meetup.com/meetup-group-msrycgdm"},
+ {line:"play",name:"Vienna Boardgamers",what:"One of the biggest Meetup groups in the city. Free game nights, long-game nights and an English board game afternoon on Sundays.",when:"Several nights a week + Sundays",where:"Incl. Zippererstraße (U3)",cost:"free",costT:"Free",lang:"English & German",shy:1,stu:1,url:"https://secure.meetup.com/find/at--vienna/meet-new-friends"},
+ {line:"play",name:"Paradice game sessions",what:"A non-profit for social gaming that runs open board game sessions in several venues, with a big games library.",when:"See website",where:"JOE&JOE (15.), Gleis Garten (12.), Superbude (2.), Paradice store (20.)",cost:"low",costT:"About €5 per session",lang:"German & English",shy:1,stu:1,url:"https://www.paradice.wien/"},
+ {line:"play",name:"WIENXTRA Spielebox",what:"The city's public games library, with hundreds of games and free game nights.",when:"See website; registration for events",where:"Albertgasse 37, 1080",cost:"free",costT:"Free",lang:"German",shy:1,stu:1,url:"https://www.wienxtra.at/spielebox"},
+ {line:"play",name:"SpielBar",what:"Game café with over a hundred games and snacks. Also hosts an open queer board game night by LGBTQ+ Friends Vienna.",when:"Opening hours; special nights vary",where:"Lederergasse 26, 1080",cost:"low",costT:"Pay for food & drinks",lang:"German & English",shy:1,url:"https://spiel-bar.at"},
+ {line:"play",name:"Pub quiz at Café Benno",what:"A long-running pub quiz with a great atmosphere. Join a team or ask to be put into one.",when:"Mondays and Tuesdays",where:"Alser Straße 67, 1080",cost:"free",costT:"Free to play",lang:"German & English",shy:2,stu:1,url:"https://www.cafebenno.at"},
+ {line:"play",name:"Luki's PubQuiz at Golden Harp",what:"Weekly quiz night in an Irish pub, run by Brainpower.events.",when:"Mondays",where:"Golden Harp Irish Pub",cost:"free",costT:"Free entry",lang:"English",shy:2,url:"https://www.eventbrite.com/e/lukis-pubquiz-golden-harp-1070-tickets-1610606440219"},
+ {line:"play",name:"Wien Museum Pub Quiz",what:"Monthly quiz about Vienna itself, with a new theme each time. Good for learning the city.",when:"Monthly",where:"Wien Museum, Karlsplatz, 1040",cost:"low",costT:"See museum shop",lang:"German",shy:2,url:"https://shop.wienmuseum.at/de/pub-quiz?locale=en"},
+ {line:"play",name:"The Offline Club Vienna",what:"Phone-free evenings, sunrise hikes, sketching and game nights. Your phone goes in a 'phone hotel' at the door.",when:"Several per month",where:"Varies",cost:"paid",costT:"Often about €12.50; some pay-what-you-want",lang:"English & German",shy:2,url:"https://luma.com/theofflineclubvienna"},
+ {line:"move",name:"Run + Breakfast in Schönbrunn",what:"Small groups run at the same pace through Schönbrunn park for about an hour, then have breakfast together.",when:"Saturdays 9:30",where:"Schönbrunn park",cost:"free",costT:"Free (breakfast extra)",lang:"English",shy:1,url:"https://www.meetup.com/Internationals-in-Wien/"},
+ {line:"move",name:"Vienna Running Collective",what:"Friendly crew for beginners to marathoners. Weekly group runs plus a monthly community social run, then coffee and bagels.",when:"Tuesdays & Sundays",where:"Home base: 1683 Bagels café",cost:"free",costT:"Free",lang:"English & German",shy:1,url:"https://runningcrews.com/crews/vienna-running-collective-vienna"},
+ {line:"move",name:"Founders Running Club",what:"Easy ~5 km Prater loop, then coffee and chat. Started by startup people, but anyone is welcome.",when:"Weekly",where:"Superbude / Café Brenner, Perspektivstraße 8, 1020",cost:"free",costT:"Free",lang:"English",shy:1,url:"http://foundersrc.com"},
+ {line:"move",name:"Social Run Club",what:"A relaxed 5 km lap around the Ring whose whole point is meeting new people.",when:"Second Monday of the month",where:"Ringstraße",cost:"free",costT:"Free",lang:"German & English",shy:1,url:"https://www.1000thingsmagazine.com/de/a/2188617/run-clubs-wien/"},
+ {line:"move",name:"WEMOVE Weekly Long Run",what:"The city's biggest long-run community meets once a week to rack up kilometres together.",when:"Sundays",where:"See WEMOVE Runningstore",cost:"free",costT:"Free",lang:"German",shy:1,url:"https://www.1000thingsmagazine.com/de/a/2188617/run-clubs-wien/"},
+ {line:"make",name:"Offenes Singen",what:"Open sing-alongs of Viennese songs, folk songs and operetta. All generations, no experience needed.",when:"Seasonal series",where:"Liebhartstaler Bockkeller, Gallitzinstraße 1, 1160",cost:"low",costT:"€2",lang:"German",shy:1,url:"https://www.wien.gv.at/veranstaltungen/singen-im-herbst"},
+ {line:"make",name:"Pop & indie choirs",what:"Vienna has a wave of relaxed choirs where enthusiasm matters more than training. Falter's guide lists the best.",when:"Weekly rehearsals",where:"Citywide",cost:"paid",costT:"Varies by choir",lang:"German",shy:1,url:"https://www.falter.at/best-of-vienna/artikel/20250623/choere-wien"},
+ {line:"make",name:"Volkshochschule courses",what:"Affordable courses in languages, movement, crafts and more, all over the city. A course means the same faces every week.",when:"Semester courses",where:"Every district",cost:"paid",costT:"Varies; some free",lang:"German (some English)",shy:1,url:"https://www.vhs.at"},
+ {line:"make",name:"Queer Events Vienna",what:"LGBTQ+ community with film nights, book clubs, trivia and outings.",when:"Many events per month",where:"Varies",cost:"free",costT:"Mostly free",lang:"English",shy:2,url:"https://www.meetup.com/queer-events-vienna/"},
+ {line:"give",name:"Freiwillig für Wien",what:"The city's volunteering platform: find organisations near you that need help, from one-off tasks to regular roles.",when:"Your schedule",where:"Citywide",cost:"free",costT:"Free",lang:"German",shy:1,url:"https://www.wien.gv.at/freiwillig"},
+ {line:"give",name:"Caritas Wien volunteering",what:"Lots of roles, from hands-on help to visiting and accompanying people. The questionnaire comes in English too.",when:"Your schedule",where:"Citywide",cost:"free",costT:"Free",lang:"German & English",shy:1,url:"https://freiwillige.caritas-wien.at/aktiv-werden/first-steps/"},
+ {line:"give",name:"Freiwilligenweb",what:"Austria's national volunteering portal, with projects and how to get started.",when:"Your schedule",where:"Austria-wide",cost:"free",costT:"Free",lang:"German",shy:1,url:"https://www.freiwilligenweb.at"},
+ {line:"study",name:"ESN Uni Wien",what:"The Erasmus Student Network section at the University of Vienna. Language cafés, international dinners, Stammtisch nights, Christmas market visits, ice skating, hikes and trips.",when:"Several events a week in term",where:"Varies",cost:"low",costT:"Many free; trips paid",lang:"English",shy:2,stu:1,url:"https://activities.esn.org/organisation/esn-uni-wien/activities"},
+ {line:"study",name:"ESN Buddynetwork TU Wien",what:"Pairs incoming exchange students with local TU 'buddies'. Parties, movie and game nights, ski trips, and dance courses for the Viennese balls.",when:"All semester",where:"TU Wien",cost:"low",costT:"Mostly low-cost",lang:"English",shy:2,stu:1,url:"https://www.tuwien.at/en/studies/international/incoming-exchange-students/arrival-and-stay/esn-buddynetwork-tu-wien"},
+ {line:"study",name:"ESN at the FHs and other unis",what:"ESN sections at FH Wien der WKW, BFI, Technikum and more run picnics, international dinners, city tours and day trips.",when:"All semester",where:"Varies",cost:"low",costT:"Varies",lang:"English",shy:2,stu:1,url:"https://activities.esn.org/organisation/esn-austria/activities"},
+ {line:"study",name:"USI university sports",what:"Cheap sports courses for students of all Vienna universities, FHs and teacher-training colleges. Same group every week, which is perfect for making friends. Try a course in the first week if it isn't full.",when:"Courses start each semester; summer semester registration opens early in the year",where:"Venues across Vienna",cost:"paid",costT:"Low semester fee",lang:"German (many English-friendly)",shy:1,stu:1,url:"https://www.usi.at"}
+];
+const W=[
+ {name:"Schönbrunn Christmas market",sub:"Ehrenhof, 1130 · free entry",a:"2026-11-06",b:"2027-01-06",k:"",t:"In front of the palace. Open longer than most markets, until Epiphany.",url:"https://www.news.at/ausflugsziele/weihnachtsmaerkte-wien-2026-schoenbrunn-rathausplatz-eroeffnung"},
+ {name:"Christkindlmarkt Rathausplatz",sub:"1010 · daily 10–22",a:"2026-11-13",b:"2026-12-26",k:"",t:"The big one, with about a hundred stalls and the giant tree. Go on a weekday evening and grab a Punsch.",url:"https://www.wien.info/en/nowon/christmas/christmas-markets-342664"},
+ {name:"Eistraum at the market",sub:"Rathausplatz · skating",a:"2026-11-13",b:"2027-01-06",k:"",t:"A smaller ice rink right by the Christmas market.",url:"https://www.wienereistraum.com/en/"},
+ {name:"Spittelberg & campus markets",sub:"close 23 Dec",a:"2026-11-20",b:"2026-12-23",k:"",t:"Smaller, cosier markets, including one on the University of Vienna campus. Most are fully open from 20 November.",url:"https://www.news.at/regional/weihnachtsmaerkte-wien-2026-termine"},
+ {name:"Silvesterpfad",sub:"Innere Stadt · free",a:"2026-12-31",b:"2026-12-31",k:"one",t:"The free New Year's Eve street party across the city centre, with stages, music and waltzing in the streets.",url:"https://www.wien.info/de/musik-buehne/silvester"},
+ {name:"Wiener Eistraum",sub:"Rathausplatz · big rink",a:"2027-01-22",b:"2027-03-07",k:"",t:"The full rink returns with over 10,000 m² of ice and the raised 'Sky Rink'. Great with a group of new friends.",url:"https://www.wienereistraum.com/en/"},
+ {name:"Ball der Wissenschaften",sub:"Rathaus · student tickets",a:"2027-01-23",b:"2027-01-23",k:"ball",t:"The city's ball for science and universities, 8 pm to 4 am at City Hall.",url:"https://www.wissenschaftsball.at/en/faq/"},
+ {name:"TU Ball",sub:"Hofburg · student €55",a:"2027-01-28",b:"2027-01-28",k:"ball",t:"One of Vienna's oldest balls, known for its young crowd. Student tickets cost a fraction of the full price.",url:"https://htu.at/en/tuball-en/"}
+];
+
+const J=[
+ {name:"AMS side-job guide",what:"The public employment service's guide to finding a side job in Vienna, with the legal basics and job search tips.",when:"Any time",where:"Online",costT:"Free",lang:"German",url:"https://www.ams.at/arbeitsuchende/topicliste/nebenjob-wien"},
+ {name:"Career Center Universität Wien",what:"The University of Vienna's job board, with thousands of jobs and internships, plus free career counselling and career events.",when:"Any time",where:"Campus, Spitalgasse 2, 1090",costT:"Free",lang:"German & English",url:"https://careercenter.univie.ac.at/en/"},
+ {name:"studium.at student jobs",what:"Job board just for students, sorted by type (retail, tutoring, care…). Also has a calculator for what you take home and grant limits.",when:"Any time",where:"Online",costT:"Free",lang:"German",url:"https://www.studium.at/jobs/studentenjobs/wien?jobtyp=nebenjob"},
+ {name:"crewhub",what:"Flexible shifts in events, hotels and retail, without the usual long application process.",when:"Flexible shifts",where:"Karl-Farkas-Gasse 22, 1030",costT:"Paid work",lang:"German",url:"https://www.studium.at/unternehmen/95813784-crewhub-flexco"},
+ {name:"StepStone side jobs in Vienna",what:"Big job portal with a filter for side and weekend jobs in Vienna, many in hospitality.",when:"Any time",where:"Online",costT:"Free",lang:"German",url:"https://www.stepstone.at/jobs/nebenjob/in-wien"},
+ {name:"Indeed student jobs in Vienna",what:"Lots of part-time and working-student roles (15–25 hours a week) in offices, banks and back-office teams.",when:"Any time",where:"Online",costT:"Free",lang:"German & English",url:"https://at.indeed.com/Studenten-Jobs-Wien"}
+];
+
+const keys=Object.keys(LINES);
+const st={cost:"all",shy:"all"};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $=id=>document.getElementById(id);
+const fmt=d=>new Date(d+"T12:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short"});
+const range=e=>fmt(e.a)+(e.a===e.b?"":" – "+fmt(e.b));
+const n=k=>D.filter(x=>x.line===k).length;
+const route2=k=>k==="study"?"students":k==="give"?"work":k;
+
+/* ---------- illustrated plates (original drawings, muted palette) ---------- */
+const P={ink:"#20231f",sage:"#65745c",sage2:"#8f9c86",sage3:"#c3cbb9",clay:"#c77d5d",clay2:"#dba287",sand:"#e8e5dc",sand2:"#d9d3c3",stone:"#bdb6a5",cream:"#f5f3ed",plum:"#8b6f86",sky:"#d6dccf"};
+const bg=(c1,c2)=>`<defs><linearGradient id="g${c1.slice(1)}${c2.slice(1)}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs><rect width="800" height="600" fill="url(#g${c1.slice(1)}${c2.slice(1)})"/>`;
+const table=(y,c)=>`<rect x="0" y="${y}" width="800" height="${600-y}" fill="${c}"/><rect x="0" y="${y}" width="800" height="6" fill="#000" opacity=".06"/>`;
+const cup=(x,y,s,c)=>`<g transform="translate(${x} ${y}) scale(${s})"><ellipse cx="0" cy="58" rx="78" ry="14" fill="#000" opacity=".08"/><ellipse cx="0" cy="50" rx="70" ry="12" fill="${P.cream}"/><path d="M-48 -20 L48 -20 C46 30 30 50 0 50 C-30 50 -46 30 -48 -20 Z" fill="${c}"/><path d="M46 -6 C76 -6 76 30 40 30" fill="none" stroke="${c}" stroke-width="10" stroke-linecap="round"/><ellipse cx="0" cy="-20" rx="48" ry="9" fill="#5b3f2e"/><path d="M-30 -20 C-30 8 -20 30 -6 40" stroke="#fff" stroke-width="5" opacity=".25" fill="none" stroke-linecap="round"/></g>`;
+const steam=(x,y)=>`<path d="M${x} ${y} c-14 -20 14 -30 0 -52 c-12 -20 12 -30 0 -50" fill="none" stroke="#fff" stroke-width="5" opacity=".6" stroke-linecap="round"/>`;
+const die=(x,y,r,s,pips)=>{let o=`<g transform="translate(${x} ${y}) rotate(${r}) scale(${s})"><rect x="-50" y="-50" width="100" height="100" rx="20" fill="${P.cream}"/><rect x="-50" y="-50" width="100" height="100" rx="20" fill="none" stroke="#000" stroke-opacity=".08" stroke-width="3"/>`;const pos={1:[[0,0]],3:[[-24,-24],[0,0],[24,24]],5:[[-24,-24],[24,-24],[0,0],[-24,24],[24,24]],6:[[-24,-26],[24,-26],[-24,0],[24,0],[-24,26],[24,26]]}[pips];for(const [a,b] of pos)o+=`<circle cx="${a}" cy="${b}" r="8" fill="${P.ink}"/>`;return o+"</g>"};
+const sun=(x,y,r,c)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${c}"/>`;
+const person=(x,y,s,c)=>`<g transform="translate(${x} ${y}) scale(${s})"><circle cx="0" cy="-62" r="12" fill="${P.ink}"/><path d="M-16 -46 C-16 -50 16 -50 16 -46 L20 -6 L-20 -6 Z" fill="${c}"/><rect x="-14" y="-8" width="10" height="44" rx="5" fill="${P.ink}"/><rect x="4" y="-8" width="10" height="44" rx="5" fill="${P.ink}"/></g>`;
+const ARTS={
+ hero:()=>{let s=bg("#e6dccb","#efe9dd")+sun(560,170,70,P.clay2);
+   // far rooftops
+   s+=`<path d="M0 420 L0 360 L60 360 L60 330 L110 300 L160 330 L160 370 L230 370 L230 340 L300 340 L300 380 L800 380 L800 420 Z" fill="${P.sand2}"/>`;
+   // dome church (generic)
+   s+=`<g fill="${P.sage3}"><rect x="300" y="290" width="150" height="130"/><path d="M315 290 C315 210 435 210 435 290 Z"/><rect x="368" y="185" width="14" height="32"/><circle cx="375" cy="180" r="9"/><rect x="270" y="250" width="26" height="170"/><rect x="454" y="250" width="26" height="170"/><path d="M270 250 L283 228 L296 250 Z"/><path d="M454 250 L467 228 L480 250 Z"/></g>`;
+   // ferris wheel
+   s+=`<g stroke="${P.sage}" fill="none"><circle cx="620" cy="250" r="130" stroke-width="7"/><circle cx="620" cy="250" r="118" stroke-width="2"/>`;for(let i=0;i<15;i++){const a=i/15*Math.PI*2;s+=`<line x1="620" y1="250" x2="${620+Math.cos(a)*130}" y2="${250+Math.sin(a)*130}" stroke-width="2"/>`}
+   s+=`<path d="M620 250 L560 430 M620 250 L680 430" stroke-width="9" stroke-linecap="round"/></g>`;
+   for(let i=0;i<15;i++){const a=i/15*Math.PI*2;s+=`<rect x="${620+Math.cos(a)*130-11}" y="${250+Math.sin(a)*130-2}" width="22" height="18" rx="4" fill="${i%3?P.clay:P.ink}"/>`}
+   s+=`<circle cx="620" cy="250" r="12" fill="${P.ink}"/>`;
+   // near buildings
+   s+=`<path d="M0 470 L0 400 L90 400 L90 380 L180 380 L180 410 L250 410 L250 470 Z" fill="${P.stone}"/><g fill="${P.cream}" opacity=".7">`;for(let x=14;x<240;x+=34)s+=`<rect x="${x}" y="418" width="14" height="22" rx="7"/>`;s+=`</g>`;
+   s+=table(470,"#d7cfbd")+`<rect y="470" width="800" height="130" fill="#cfc6b2"/>`;
+   s+=person(380,560,1.15,P.clay)+person(430,562,1.1,P.sage)+person(560,560,1,P.plum)+person(600,561,1.05,P.ink);
+   return s},
+ talk:()=>bg("#e9dfd0","#efe8dc")+`<circle cx="620" cy="140" r="200" fill="${P.clay2}" opacity=".35"/>`+table(400,"#cdbfa6")+cup(270,400,1.2,P.clay)+cup(530,410,1.05,P.sage)+steam(260,320)+steam(530,340)+`<g fill="${P.cream}"><rect x="90" y="90" width="230" height="90" rx="45"/><path d="M170 170 L150 215 L210 175 Z"/><rect x="430" y="120" width="210" height="80" rx="40"/><path d="M570 190 L600 230 L540 196 Z"/></g><g fill="${P.ink}" opacity=".55"><circle cx="165" cy="135" r="9"/><circle cx="205" cy="135" r="9"/><circle cx="245" cy="135" r="9"/></g><text x="535" y="172" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-style="italic" font-size="34" fill="${P.sage}">Servus!</text>`,
+ play:()=>bg("#dfe3d8","#e9ece3")+`<circle cx="160" cy="150" r="150" fill="${P.sage3}"/>`+table(420,"#b9a98d")+`<rect x="420" y="260" width="200" height="140" rx="10" transform="rotate(-8 520 330)" fill="${P.cream}"/><rect x="440" y="280" width="160" height="100" rx="6" transform="rotate(-8 520 330)" fill="none" stroke="${P.clay}" stroke-width="4"/><text x="510" y="345" transform="rotate(-8 520 330)" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="46" fill="${P.clay}">?</text>`+die(260,380,-14,1.15,5)+die(380,410,12,.9,3)+`<g transform="translate(680 420)"><ellipse cx="0" cy="0" rx="40" ry="10" fill="#000" opacity=".12"/><path d="M-30 0 C-30 -20 -14 -30 -14 -60 C-26 -66 -26 -90 0 -96 C26 -90 26 -66 14 -60 C14 -30 30 -20 30 0 Z" fill="${P.ink}"/></g>`,
+ move:()=>bg("#f0dcc7","#f3e9db")+sun(560,190,90,P.clay)+`<path d="M0 360 C160 280 300 300 420 340 C560 380 680 300 800 320 L800 600 L0 600 Z" fill="${P.sage2}"/><path d="M0 430 C200 380 380 400 520 440 C640 470 720 430 800 420 L800 600 L0 600 Z" fill="${P.sage}"/><path d="M380 600 C420 520 470 480 560 450" stroke="${P.cream}" stroke-width="22" fill="none" stroke-linecap="round" opacity=".8"/>`+person(470,488,.8,P.clay)+person(510,478,.75,P.cream)+`<g fill="${P.ink}" opacity=".7"><path d="M120 330 l12 -60 l12 60 Z"/><path d="M150 330 l10 -46 l10 46 Z"/><path d="M700 320 l12 -56 l12 56 Z"/></g>`,
+ make:()=>bg("#ebe2e6","#f2ecee")+`<rect x="80" y="80" width="260" height="320" fill="${P.sand}"/><rect x="100" y="100" width="220" height="280" fill="${P.sage3}"/><circle cx="210" cy="220" r="60" fill="${P.clay2}"/><path d="M100 330 C160 280 240 300 320 260 L320 380 L100 380 Z" fill="${P.sage}"/>`+table(430,"#c9bcae")+`<g transform="translate(560 430)"><ellipse cx="0" cy="6" rx="80" ry="14" fill="#000" opacity=".1"/><path d="M-40 0 C-80 -60 -60 -140 -20 -170 L-20 -200 L20 -200 L20 -170 C60 -140 80 -60 40 0 Z" fill="${P.plum}"/><path d="M-8 -200 C-30 -260 -70 -280 -90 -300 M6 -200 C10 -270 40 -300 70 -330 M0 -200 C0 -250 -6 -290 -10 -330" stroke="${P.sage}" stroke-width="5" fill="none"/><ellipse cx="-90" cy="-305" rx="22" ry="12" fill="${P.sage2}" transform="rotate(-30 -90 -305)"/><ellipse cx="72" cy="-334" rx="24" ry="12" fill="${P.sage2}" transform="rotate(-40 72 -334)"/><circle cx="-10" cy="-338" r="16" fill="${P.clay}"/></g><g transform="translate(330 470) rotate(-20)"><rect x="0" y="-6" width="170" height="12" rx="6" fill="${P.ink}"/><rect x="160" y="-9" width="40" height="18" rx="4" fill="${P.stone}"/><path d="M198 -9 C230 -9 240 0 240 0 C240 0 230 9 198 9 Z" fill="${P.clay}"/></g>`,
+ give:()=>bg("#dfe3d8","#e8ebe3")+`<circle cx="400" cy="250" r="190" fill="${P.sage3}"/>`+table(440,"#c5bba6")+`<g transform="translate(400 440)"><ellipse cx="0" cy="8" rx="110" ry="16" fill="#000" opacity=".1"/><path d="M-90 -110 L90 -110 L70 0 L-70 0 Z" fill="${P.clay}"/><rect x="-100" y="-130" width="200" height="30" rx="6" fill="${P.clay2}"/><path d="M0 -130 C0 -200 -10 -240 -6 -300" stroke="${P.sage}" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M-4 -230 C-60 -250 -110 -230 -120 -190 C-70 -180 -30 -200 -4 -230 Z" fill="${P.sage}"/><path d="M-4 -280 C40 -320 100 -310 120 -280 C80 -250 30 -260 -4 -280 Z" fill="${P.sage2}"/></g><path d="M610 120 C610 90 650 90 650 120 C650 90 690 90 690 120 C690 150 650 170 650 185 C650 170 610 150 610 120 Z" fill="${P.clay}"/>`,
+ study:()=>bg("#e4e0d4","#ece9df")+`<rect x="520" y="60" width="200" height="260" fill="${P.cream}"/><g stroke="${P.stone}" stroke-width="3">`+[100,140,180,220,260].map(y=>`<line x1="545" y1="${y}" x2="695" y2="${y}"/>`).join("")+`</g>`+table(430,"#bfae92")+`<g transform="translate(300 430)"><ellipse cx="0" cy="6" rx="170" ry="14" fill="#000" opacity=".1"/><rect x="-150" y="-50" width="300" height="50" rx="4" fill="${P.sage}"/><rect x="-130" y="-96" width="270" height="46" rx="4" fill="${P.clay}"/><rect x="-140" y="-136" width="250" height="40" rx="4" fill="${P.ink}"/><rect x="-120" y="-176" width="230" height="40" rx="4" fill="${P.plum}"/><g fill="${P.cream}" opacity=".6"><rect x="110" y="-40" width="8" height="30"/><rect x="100" y="-86" width="8" height="26"/></g></g><g transform="translate(560 430)"><rect x="-10" y="-200" width="10" height="200" fill="${P.ink}"/><path d="M-5 -200 L80 -260" stroke="${P.ink}" stroke-width="10" stroke-linecap="round"/><path d="M50 -300 L130 -240 L90 -210 Z" fill="${P.clay}"/><ellipse cx="0" cy="0" rx="50" ry="10" fill="${P.ink}"/></g><path d="M240 250 L300 225 L360 250 L300 275 Z" fill="${P.ink}"/><path d="M270 262 L270 290 C290 302 310 302 330 290 L330 262" fill="${P.ink}"/>`,
+ winter:()=>{let s=bg("#c9d1c4","#e4e6de");s+=`<circle cx="640" cy="120" r="56" fill="${P.cream}" opacity=".85"/>`;
+   for(const [x,w,c] of [[60,200,P.clay],[300,220,P.sage],[560,200,P.plum]]){s+=`<rect x="${x}" y="300" width="${w}" height="170" fill="${P.sand2}"/><rect x="${x+20}" y="330" width="${w-40}" height="60" fill="${P.cream}" opacity=".8"/><path d="M${x-20} 300 L${x+w/2} 210 L${x+w+20} 300 Z" fill="${c}"/><path d="M${x-20} 300 L${x+w/2} 210 L${x+w+20} 300" fill="none" stroke="#fff" stroke-width="8" stroke-linejoin="round"/>`;for(let i=0;i<8;i++)s+=`<circle cx="${x+i*(w/7)}" cy="${300+Math.sin(i)*6+8}" r="5" fill="#f6d27a"/>`}
+   s+=`<rect y="470" width="800" height="130" fill="#f1efe8"/>`;
+   let r=11;for(let i=0;i<60;i++){r=r*16807%2147483647;const x=r%800;r=r*16807%2147483647;s+=`<circle cx="${x}" cy="${r%470}" r="${2+r%3}" fill="#fff" opacity=".9"/>`}
+   return s+person(380,560,1,P.clay)+person(420,561,.95,P.sage)},
+ jobs:()=>bg("#e8e5dc","#efece4")+table(430,"#c6b9a2")+cup(250,420,.9,P.sage)+`<g transform="translate(520 430)"><ellipse cx="0" cy="6" rx="150" ry="14" fill="#000" opacity=".1"/><rect x="-130" y="-170" width="260" height="170" rx="16" fill="${P.clay}"/><rect x="-50" y="-210" width="100" height="50" rx="12" fill="none" stroke="${P.ink}" stroke-width="12"/><rect x="-130" y="-110" width="260" height="10" fill="#000" opacity=".12"/><rect x="-18" y="-120" width="36" height="28" rx="4" fill="${P.ink}"/></g><circle cx="150" cy="140" r="70" fill="${P.sage3}"/><text x="150" y="160" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="64" fill="${P.sage}">€</text>`
+};
+const PHOTOS={
+ hero:{f:"hero",alt:"People relaxing on the grass in a Vienna park, seen through a round opening in a stone fence",pos:"50% 50%"},
+ talk:{f:"talk",alt:"Colourful café chairs and tables in a sunny Vienna courtyard",pos:"50% 75%"},
+ play:{f:"play",alt:"A hand playing cards over a board game with coloured pieces",pos:"50% 50%"},
+ move:{f:"move",alt:"A group of friends running together down a tree-lined road",pos:"50% 80%"},
+ run:{f:"run",alt:"Runners on a city street during a race",pos:"50% 55%"},
+ give:{f:"give",alt:"Three smiling volunteers in red T-shirts with volunteer badges",pos:"50% 30%"},
+ study:{f:"study",alt:"Students having a picnic on the grass in front of a museum on Maria-Theresien-Platz",pos:"50% 85%"},
+ winter:{f:"winter",alt:"A giant illuminated red bow on a Vienna building above a winter crowd",pos:"50% 45%"},
+ jobs:{f:"jobs",alt:"Two dog walkers out on a path with a pack of dogs",pos:"50% 60%"},
+ make:{f:"make",alt:"A woman painting flowers on a canvas while her teacher watches in an art studio",pos:"72% 35%"},
+ tips:{f:"tips",alt:"People sharing long tables at a festival in front of Vienna City Hall",pos:"50% 70%"}
+};
+const paint=root=>{for(const el of root.querySelectorAll("[data-art]"))if(!el.querySelector("svg,img")){const k=el.dataset.art,ph=PHOTOS[k];if(ph){el.insertAdjacentHTML("afterbegin",`<img src="img/${ph.f}.jpg" alt="${esc(ph.alt)}" style="object-position:${ph.pos}">`)}else{const f=ARTS[k]||ARTS.talk;el.insertAdjacentHTML("afterbegin",`<svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${f()}</svg>`)}}};
+
+/* ---------- templates ---------- */
+const card=x=>`<article class="card"><div class="kick">${esc(LINES[x.line].short)} · ${esc(SHY[x.shy])}</div><h3>${esc(x.name)}</h3><p>${esc(x.what)}</p><dl class="meta"><dt>When</dt><dd>${esc(x.when)}</dd><dt>Where</dt><dd>${esc(x.where)}</dd><dt>Cost</dt><dd>${esc(x.costT)}</dd></dl><div class="tags">${x.stu?'<span class="stu">Student-friendly</span>':''}<span>${esc(COST[x.cost])}</span><span>${esc(x.lang)}</span></div><a class="go" href="${esc(x.url)}" target="_blank" rel="noopener">Details &amp; dates<span>↗</span></a></article>`;
+const jcard=x=>`<article class="card"><div class="kick">Part-time jobs</div><h3>${esc(x.name)}</h3><p>${esc(x.what)}</p><dl class="meta"><dt>When</dt><dd>${esc(x.when)}</dd><dt>Where</dt><dd>${esc(x.where)}</dd><dt>Cost</dt><dd>${esc(x.costT)}</dd></dl><div class="tags"><span>${esc(x.lang)}</span></div><a class="go" href="${esc(x.url)}" target="_blank" rel="noopener">Open job board<span>↗</span></a></article>`;
+const wcard=e=>`<article class="wcard"><span class="d">${esc(range(e))}</span><h3>${esc(e.name)}</h3><p>${esc(e.t)}</p><a href="${esc(e.url)}" target="_blank" rel="noopener">Official info ↗</a></article>`;
+const tile=k=>{const v=LINES[k],c=n(k);return `<a class="product" href="#${route2(k)}"><div class="plate" data-art="${k}"><span class="tag">${c} places</span><span class="quick">See all ${esc(v.short.toLowerCase())} ↗</span></div><div class="pinfo"><span class="pname">${esc(v.n)}</span>${(f=>f?`<span class="pcount">${f} free</span>`:"")(D.filter(x=>x.line===k&&x.cost==="free").length)}</div><p class="pdesc">${esc(v.d)}</p></a>`};
+
+$("hstats").innerHTML=`<div><b>${D.length}</b><span>Places</span></div><div><b>${keys.length}</b><span>Categories</span></div><div><b>${D.filter(x=>x.cost==="free").length}</b><span>Free to join</span></div><div><b>${W.length}</b><span>Winter events</span></div>`;
+$("tiles").innerHTML=keys.map(tile).join("");$("tiles2").innerHTML=keys.map(tile).join("");
+$("flines").innerHTML=keys.map(k=>`<a href="#${route2(k)}">${esc(LINES[k].n)}</a>`).join("");
+const today=new Date().toISOString().slice(0,10);
+const up=W.filter(e=>e.b>=today);
+$("wteaser").innerHTML=(up.length?up:W).slice(0,4).map(wcard).join("");
+$("stuart").innerHTML=D.filter(x=>x.line==="study").map(x=>`<div>${esc(x.name)}<span>${esc(x.costT)}</span></div>`).join("")+W.filter(e=>e.k==="ball").map(e=>`<div>${esc(e.name)}<span>${esc(range(e))}</span></div>`).join("");
+$("wall").innerHTML=W.map(wcard).join("");
+$("sgrid").innerHTML=D.filter(x=>x.line==="study").map(card).join("");
+$("sballs").innerHTML=W.filter(e=>e.k==="ball"||/Eistraum/.test(e.name)).map(wcard).join("");
+$("sother").innerHTML=D.filter(x=>x.stu&&x.line!=="study").slice(0,6).map(card).join("");
+$("vgrid").innerHTML=D.filter(x=>x.line==="give").map(card).join("");
+$("jgrid").innerHTML=J.map(jcard).join("");
+$("wvcount").textContent=`${n("give")} places to start, from the city's own volunteer platform to Caritas.`;
+
+/* winter timeline */
+{const t0=Date.parse("2026-11-01"),t1=Date.parse("2027-03-15"),sp=t1-t0,p=d=>(Date.parse(d)-t0)/sp*100;
+ const tp=(Date.now()-t0)/sp*100,show=tp>=0&&tp<=100;
+ const mo=[["2026-11-01","Nov"],["2026-12-01","Dec"],["2027-01-01","Jan"],["2027-02-01","Feb"],["2027-03-01","Mar"]];
+ $("tl").innerHTML=`<div class="mo"><span></span><div>${mo.map(([d,l])=>`<span style="left:${p(d)}%">${l}</span>`).join("")}${show?`<span class="nowl" style="left:${tp}%">Today</span>`:""}</div></div>`+
+ W.map(e=>`<div class="ev"><div class="nm">${esc(e.name)}<small>${esc(range(e))} · ${esc(e.sub)}</small></div><div class="trk">${show?`<span class="now" style="left:${tp}%"></span>`:""}<i class="${e.k}" style="left:${p(e.a)}%;width:${Math.max(0,p(e.b)-p(e.a))}%" title="${esc(range(e))}"></i></div></div>`).join("")+
+ `<div class="legend"><span><i style="background:var(--green)"></i>Markets &amp; ice rinks</span><span><i style="background:var(--ink)"></i>New Year's Eve</span><span><i style="background:var(--clay)"></i>Balls</span></div>`;}
+
+/* category page */
+let cur="talk";
+function renderLine(){
+  const v=LINES[cur];
+  $("phead").innerHTML=`<div><p class="crumb"><a href="#home">Home</a> / <a href="#explore">Categories</a> / ${esc(v.n)}</p><div class="eyebrow">Category</div><h1>${esc(v.n.split(" & ")[0])}${v.n.includes("&")?` &amp; <em>${esc(v.n.split(" & ")[1])}.</em>`:"."}</h1><p class="sub">${esc(v.long)}</p><div class="pstats"><div><b>${n(cur)}</b><span>Places</span></div><div><b>${D.filter(x=>x.line===cur&&x.cost==="free").length}</b><span>Free</span></div><div><b>${D.filter(x=>x.line===cur&&x.shy===1).length}</b><span>Shy-friendly</span></div></div></div><div class="plate" data-art="${cur==="move"?"run":cur}"></div>`;
+  paint($("phead"));
+  const r=D.filter(x=>x.line===cur&&(st.cost==="all"||(st.cost==="free"?x.cost==="free":x.cost!=="paid"))&&(st.shy==="all"||(st.shy==="1"?x.shy===1:x.shy>=2)));
+  $("count").textContent=`Showing ${r.length} of ${n(cur)} places`;
+  $("grid").innerHTML=r.length?r.map(card).join(""):`<div class="empty">Nothing in this category matches these filters. Try "Any".</div>`;
+  for(const b of document.querySelectorAll(".filter"))b.setAttribute("aria-pressed",String(st[b.dataset.f]===b.dataset.v));
+  $("next").innerHTML=keys.filter(k=>k!==cur).map(k=>`<a href="#${route2(k)}">${esc(LINES[k].n)}<span>↗</span></a>`).join("");
+}
+for(const b of document.querySelectorAll(".filter"))b.addEventListener("click",()=>{st[b.dataset.f]=b.dataset.v;renderLine()});
+
+/* mobile menu */
+const nav=$("nav"),mb=$("menuBtn");
+mb.addEventListener("click",()=>{const o=nav.classList.toggle("open");mb.setAttribute("aria-expanded",String(o))});
+for(const a of nav.querySelectorAll("a"))a.addEventListener("click",()=>{nav.classList.remove("open");mb.setAttribute("aria-expanded","false")});
+
+/* router */
+const views=["home","explore","line","winter","students","work","tips"];
+function route(){
+  const h=(location.hash||"#home").slice(1);
+  let view=h;
+  if(keys.includes(h)&&h!=="study"&&h!=="give"){view="line";cur=h;st.cost="all";st.shy="all";renderLine()}
+  else if(h==="study")view="students";
+  else if(h==="give"||h==="work-jobs")view="work";
+  else if(!views.includes(h)||h==="line")view="home";
+  for(const v of views)$("v-"+v).hidden=v!==view;
+  for(const a of nav.querySelectorAll("a")){const t=a.getAttribute("href").slice(1);if(t===view||(view==="line"&&t==="explore"))a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")}
+  paint(document);
+  if(h==="work-jobs")$("work-jobs").scrollIntoView();else window.scrollTo(0,0);
+}
+addEventListener("hashchange",route);
+route();
+}
+</script>
+</body>
+</html>
